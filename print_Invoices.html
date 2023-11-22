@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./Images/logo.jpg">
+    <title>Invoice</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <!-- header -->
+        <header></header>
+        <!-- header ends -->
+        <!-- main-contents -->
+        <div class="main-contents">
+            <section class="print-invoice-wrap"></section>
+        </div>
+        <!-- main-contents ends -->
+    </div>
+    <!-- wrapper ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function (){
+    checkSession();
+
+    //getting data from the url link
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const Link = urlParams.get("Link");
+
+    $.post("./php/print_Invoices.php", {Link: Link}, function(data) {
+        $(".print-invoice-wrap").html(data);
+    });
+});
+</script>
+</html>
+

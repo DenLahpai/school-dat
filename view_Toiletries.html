@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./Images/logo.jpg">
+    <title>Toiletries</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <header></header>
+    </div>
+    <!-- wrapper ends -->
+    <!-- main-contents -->
+    <div class="main-contents">
+        <section class="page-title">
+            <h2>Toiletries List</h2>
+        </section>
+        <section class="cmd-bar">
+            <div class="cmd-bar-wrap">
+                <ul>
+                    <li>
+                        <a href="./new_Toiletries.html">New Entry</a>
+                    </li>
+                    <li>
+                        <span style="font-weight: bold;">Filter by Code:</span>
+                        <select id="InventoryCode" onchange="filterInventoryList('Code', 'Toiletries');">
+                            <option>Select One</option>
+                        </select>
+                    </li>
+                    <li>
+                        <span style="font-weight: bold;">Filter by Item:</span>
+                        <select id="InventoryName" onchange="filterInventoryList('Name', 'Toiletries');">
+                            <option>Select One</option>
+                        </select>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank">Export to Excel</a>
+                    </li>
+                    <li>
+                        <a href="./xls/toiletries_codes.xlsx">Guideline for Codes</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section class="main-data"></section>
+    </div>
+    <!-- main-contents ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    checkSession();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+
+    getOptionsList ("Toiletries", "Code", "InventoryCode");
+    getOptionsList ("Toiletries", "Name", "InventoryName");
+    
+    getToiletriesData();
+
+});
+</script>
+</html>
+

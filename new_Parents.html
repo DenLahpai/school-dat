@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./images/logo.jpg">
+    <title>Add Parent</title>
+</head>
+<body>
+    <!-- wrapper  -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-content -->
+        <div class="main-content">
+            <section class="medium-form">
+                <!-- form-wrap  -->
+                <div class="form-wrap">
+                    <form action="#" method="post" id="myForm">
+                        <div>
+                            Title: &nbsp;
+                            <input type="radio" id="Mr" name="Title" value="Mr.">
+                            <label for="Mr">Mr</label>
+                            &nbsp;
+                            <input type="radio" id="Mrs" name="Title" value="Mrs.">
+                            <label for="Mrs">Mrs</label>
+                        </div>
+                        <div>
+                            <input type="hidden" id="StudentsLink" name="StudentsLink">
+                            <input type="text" id="Name" name="Name" placeholder="Name">
+                        </div>
+                        <div>
+                            <input type="text" id="Mobile" name="Mobile" placeholder="09XXXXXXXX">
+                        </div>
+                        <div>
+                            <input type="text" id="Email" name="Email" placeholder="Email">
+                        </div>
+                        <div>
+                            <input type="text" id="Relation" name="Relation" placeholder="Relationship">
+                        </div>
+                        <div>
+                            <input type="text" id="Occupation" name="Occupation" placeholder="Occupation">
+                        </div>
+                        <div>
+                            <button type="submit" class="medium-button">Submit</button>
+                        </div>
+                    </form>
+                    <div class="sys_msg"></div>
+                </div>
+                <!-- form-wrap ends -->
+            </section>
+        </div>
+        <!-- main-content ends -->
+    </div>
+    <!-- wrapper ends-->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+
+    //getting data from the url link
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const Link = urlParams.get("Link");
+    $("#StudentsLink").val(Link);
+
+    $("#myForm").on("submit", function () {
+        event.preventDefault();
+        var Title = $('input[name="Title"]:checked');
+        var Name = $("#Name");
+        var Mobile = $("#Mobile");
+        var error = false;
+
+        if (Title.val() == "" || Title.val() == null) {
+            error = true;
+            alert("Please select a title!");
+        }
+
+        if (Name.val() == "" || Name.val() == " " || Name.val() == null) {
+            error = true;
+            $("#Name").addClass("input-error");
+            $(".sys_msg").html("Please input all the filed(s) in red!");
+        }
+
+        if (Mobile.val() == "" || Mobile.val() == " " || Mobile.val() == null) {
+            error = true;
+            $("#Mobile").addClass("input-error");
+            $(".sys_msg").html("Please input all the field(s) in red!");
+        }
+
+        if (error == true) {
+            $(".sys_msg").addClass("error-msg");
+        }
+
+        if (error == false) {
+            $.ajax({
+                url: "./php/new_Parents.php",
+                type: "post",
+                data: $("#myForm").serialize(),
+                success: function (data) {
+                    if (data == 0) {
+                        location.href = "view_Students.html?Link=" + Link;
+                    }
+                    else {
+                        $(".sys_msg").html(data);
+                        $(".sys_msg").addClass("error-msg");
+                    }
+                }
+            });
+        }
+    });
+
+});
+</script>
+</html>

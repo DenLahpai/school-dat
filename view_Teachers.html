@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./Images/logo.jpg">
+    <title>Teacher Profile</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents -->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>Teacher Profile</h2>
+            </section>
+            <section class="student-profile">
+                <!-- split left -->
+                <div class="split left">
+                    <!-- profile-wrap -->
+                    <div class="profile-wrap"></div>
+                    <!-- profile-wrap ends-->
+                </div>
+                <!-- split left ends -->
+                <!-- split right -->
+                <div class="split right">
+                    <div class="sub-title">
+                        <h3>Classes</h3>
+                    </div>
+                    <!-- students-classes-wrap -->
+                    <div class="students-classes-wrap">
+                        <div class="add-class-btn" onclick="Toggle('.students-class-cmd');">
+                            Assign to a Class
+                        </div>
+                        <!-- teachers-class-cmd -->
+                        <div class="students-class-cmd">
+                            <form action="#" id="teachers-class-form" method="post">
+                                <input type="hidden" id="TeachersLink"  name="TeachersLink">
+                                <select name="ClassesLink" id="ClassesLink">
+                                    <option value="">Select a Class</option>
+                                </select>
+                                <button type="submit" class="medium-button">Assign</button>
+                            </form>
+                        </div>
+                        <!-- teachers-class-cmd ends -->
+                        <!-- students-current-class -->
+                        <div class="students-current-class"></div>
+                        <!-- students-current-class ends -->
+                    </div>
+                    <!-- students-classes-wrap ends -->
+                </div>
+                <!-- split right ends -->
+            </section>
+        </div>
+        <!-- main-contents ends-->
+    </div>
+    <!-- wrapper ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+
+    //getting data from the url link
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const Link = urlParams.get("Link");
+    $("#TeachersLink").val(Link);
+
+    $.post("./php/teachers_prf.php", {Link: Link}, function (data) {
+        $(".profile-wrap").html(data);
+    });
+
+    $.post("./php/get_current_classes_list.php", function (data) {
+        $("#ClassesLink").append(data);
+    });
+
+    //getting teachers classes
+    $.post("./php/select_Teachers_Classes.php", {TeachersLink: Link}, function (data) {
+        $(".students-current-class").html(data);
+    });
+
+    $("#teachers-class-form").submit(function() {
+        event.preventDefault();
+        var ClassesLink = $("#ClassesLink");
+        var error = false;
+
+        if (ClassesLink.val() == "" || ClassesLink.val() == null) {
+            error = true;
+            alert("Please choose a class!");
+        }
+
+        if (error == false) {
+            $.ajax({
+                url: "./php/add_teachers_classes.php",
+                type: "post", 
+                data: $(this).serialze(),
+                success: function (data) {
+                    if (data == 0){
+                        location.reload();
+                    }
+                    else {
+                        alert(data);
+                    }
+                }
+            });
+        }
+    });
+
+
+});   
+</script>
+</html>

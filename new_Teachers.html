@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./images/logo.jpg">
+    <title>New Teachers</title>
+</head>
+<body>
+    <!-- wrapper-->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents-->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>New Teacher</h2>
+            </section>
+            <section class="medium-form">
+                <!-- form-wrap -->
+                <div class="form-wrap">
+                    <form action="#" id="myForm" method="post" enctype="multipart/form-data">
+                        <div>
+                            Title: <br>
+                            <select name="Title" id="Title">
+                                <option value="Ms.">Ms.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Dr.">Dr.</option>
+                                <option value="Mr.">Mr.</option>
+                            </select>
+                        </div>
+                        <div>
+                            Name: <br>
+                            <input type="text" name="Name" id="Name">
+                        </div>
+                        <div>
+                            English Name: <br>
+                            <input type="text" name="EnglishName" id="EnglishName">
+                        </div>
+                        <div>
+                            Date of Birth: <br>
+                            <input type="date" name="DOB" id="DOB">
+                        </div>
+                        <div>
+                            Mobile: <br>
+                            <input type="text" name="Mobile" id="Mobile">
+                        </div>
+                        <div>
+                            Email: <br>
+                            <input type="text" name="Email" id="Email">
+                        </div>
+                        <div>
+                            Start Date: <br>
+                            <input type="date" name="StartDate" id="StartDate">
+                        </div>
+                        <div>
+                            Education: <br>
+                            <input type="text" name="Education" id="Education">
+                        </div>
+                        <div>
+                            <button type="submit" class="medium-button">Submit</button>
+                        </div>
+                    </form>
+                    <dir class="sys_msg"></dir>
+                </div>
+                <!-- form-wrap ends -->
+            </section>
+        </div>
+        <!-- main-contents ends-->
+    </div>
+    <!-- wrapper ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+
+    $("#myForm").submit(function () {
+        event.preventDefault();
+        var error = false;
+        var Name = $("#Name");
+        var Mobile = $("#Mobile");
+
+        if (Name.val() == "" || Name.val() == " " || Name.val() == null) {
+            error = true;
+            $("#Name").addClass("input-error");
+        }
+
+        if (Mobile.val() == "" || Mobile.val() == " " || Mobile.val() == null) {
+            error = true;
+            $("#Mobile").addClass("input-error");
+        }
+
+        if (error == true) {
+            $(".sys_msg").html("Please fill out all the field(s) in red!");
+            $(".sys_msg").addClass("error-msg");
+        }
+
+        if (error == false) {
+            $.ajax({
+                url: "./php/new_Teachers.php",
+                type: "post",
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data == 0) {
+                        location.href = "Teachers.html";
+                    }
+                    else {
+                        $(".sys_msg").html(data);
+                    }
+                }
+            });
+        }
+    });
+});    
+</script>
+</html>

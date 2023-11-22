@@ -1,0 +1,147 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./images/logo.jpg">
+    <title>New Class</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents -->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>New Class</h2>
+            </section>
+            <section class="medium-form">
+                <!-- form-wrap -->
+                <div class="form-wrap">
+                    <form action="#" id="myForm" method="post">
+                        <div>
+                            Name: <br>
+                            <input type="text" id="Name" name="Name" placeholder="A or B">
+                        </div>
+                        <div>
+                            Room: <br>
+                            <input type="text" id="Room" name="Room" placeholder="Room Name">
+                        </div>
+                        <div>
+                            Course: <br>
+                            <select name="CoursesLink" id="CoursesLink">
+                                <option value="CoursesLink">Select a Course</option>
+                            </select>
+                        </div>
+                        <div>
+                            Start Date: <br>
+                            <input type="date" name="StartDate" id="StartDate">
+                        </div>
+                        <div>
+                            End Date: <br>
+                            <input type="date" name="EndDate" id="EndDate">
+                        </div>
+                        <div>
+                            Registration Fees: <br>
+                            <input type="number" step="100" name="Registration" id="Registration">
+                        </div>
+                        <div>
+                            Monthly Fees: <br>
+                            <input type="number" step="100" name="Monthly" id="Monthly">
+                        </div>
+                        <div>
+                            <button type="submit" class="medium-button">Submit</button>
+                        </div>
+                    </form>
+                    <div class="sys_msg"></div>
+                </div>
+                <!-- form-wrap ends -->
+            </section>
+        </div>
+        <!-- main-contents ends -->
+    </div>
+    <!-- wrapper ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession ();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+    getOptionsList("Courses", "Name", "CoursesLink");
+
+    $("#myForm").submit(function () {
+        event.preventDefault();
+        var error = false;
+        var Name = $("#Name");
+        var CoursesLink = $("#CoursesLink");
+        var StartDate = $("#StartDate");
+        var EndDate = $("#EndDate");
+        var Registration = $("#Registration");
+        var Monthly = $("#Monthly");
+        
+        if (Name.val().trim() == "" || Name.val() == null) {
+            error = true;
+            Name.addClass("input-error");
+            alert("Name");
+        }
+
+        if (CoursesLink.val() == "" || CoursesLink.val() == null) {
+            error = true;
+            CoursesLink.addClass("input-error");
+            alert("Course");
+        }
+
+        if (StartDate.val() == "" || StartDate.val() == null) {
+            error = true;
+            StartDate.addClass("input-error");
+            alert("Start");
+        }
+
+        if (EndDate.val() == "" || EndDate.val() == null) {
+            error = true;
+            EndDate.addClass("input-error");
+            alert("End");
+        }
+
+        if (Registration.val().trim() == "" || Registration.val() == null) {
+            error = true;
+            Registration.addClass("input-error");
+            alert("Reg")
+        }
+
+        if (Monthly.val().trim() == "" || Monthly.val() == null) {
+            error = true;
+            Monthly.addClass("input-error");
+            alert("Month");
+        }
+
+        if (error == true) {
+            $(".sys_msg").addClass("error-msg");
+            $(".sys_msg").html("Please fill out all the field(s) in red!");
+        }
+
+        if (error == false) {
+            $.ajax({
+                url: "./php/new_Classes.php",
+                type: "POST",
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data == 0) {
+                        location.href = "Classes.html";
+                    }
+                    else {
+                        $(".sys_msg").addClass("error-msg");
+                        $(".sys_msg").html(data);
+                    }
+                }
+            });
+        }
+    });
+});    
+</script>
+</html>

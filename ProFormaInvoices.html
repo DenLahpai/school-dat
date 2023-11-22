@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./Images/logo.jpg">
+    <title>Pro Forma Invoices</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents -->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>Pro Forma Invoices</h2>
+            </section>
+            <section class="cmd-bar">
+                <!-- cmd-bar-wrap -->
+                <div class="cmd-bar-wrap">
+                    <ul>
+                        <li>
+                            Limit: 
+                            <select id="limit" onchange="getMainData('ProFormaInvoices');">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </li>
+                        <li>
+                            Sort by:
+                            <select id="order" name="order" onchange="getMainData('ProFormaInvoices');">
+                                <option value="ORDER BY Deadline DESC">Deadline New &#8645; Old</option>
+                                <option value="ORDER BY Deadline ASC" selected="selected">Dealine Old &#8645; New</option>
+                            </select>
+                        </li>
+                        <!-- <li>
+                            <input type="text" id="search" name="search">
+                            <button type="button" id="btn-search" onclick="getMainData('ProFormaInvoices');">Search</button>
+                            <button type="button" id="btn-clear" onclick="location.reload();">Clear</button>
+                        </li> -->
+                    </ul>
+                </div>
+                <!-- cmd-bar-wrap ends -->
+            </section>
+            <section class="main-data"></section>
+            <section class="pagination">
+                <div class="current-page">
+                    <input type="number" id="current-page" value="1">
+                    <span class="page-number"></span>
+                </div>
+                <div class="page-buttons">
+                    <button type="button" id="prev"><<<</button>
+                    <button type="button" class="page-button" id="pgbtn1">1</button>
+                    <button type="button" class="page-button" id="pgbtn2">2</button> 
+                    <button type="button" class="page-button" id="pgbtn3">3</button>
+                    <button type="button" class="page-button" id="pgbtn4">4</button>
+                    <button type="button" class="page-button" id="pgbtn5">5</button>
+                    <button type="button" class="page-button" id="pgbtn6">6</button>
+                    <button type="button" id="next">>>></button>
+                </div>
+            </section>
+        </div>
+        <!-- main-contents-ends -->
+    </div>
+    <!-- wrapper-ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+    getMainData("ProFormaInvoices");
+
+    $(".page-button").on("click", function () {
+        var newPage = $(this).html();
+        $("#current-page").val(newPage);
+        getMainData("ProFormaInvoices");
+    });
+
+    $("#prev").on("click", function () {
+        var newPage = Number($("#current-page").val()) - Number(1);
+        $("#current-page").val(newPage);
+        getMainData("ProFormaInvoices");
+    });
+
+    $("#next").on("click", function () {
+        var newPage = Number($("#current-page").val()) + Number(1);
+        $("#current-page").val(newPage);
+        getMainData("ProFormaInvoices");
+    });
+});
+</script>
+</html>

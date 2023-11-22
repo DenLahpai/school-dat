@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./images/logo.jpg">
+    <title>View Classes</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents-->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>Class</h2>
+            </section>
+            <section class="main-data"></section>
+            <section class="classes-add-students">
+                <!-- students-search-form -->
+                <div class="students-search-form">
+                    <div>
+                        <h4>Search for Students to Add to this Class</h4>
+                        <br>
+                    </div>
+                    <form action="#" id="searchForm" method="post">
+                        <input type="hidden" id="ClassesLink" name="ClassesLink">
+                        <input type="text" id="search-students" name="search" placeholder="Admission No. or Name">
+                        <button type="submit" class="medium-button">Search</button>
+                        <button type="button" id="clear-button" class="medium-button">Clear</button>
+                    </form>
+                </div>
+                <!-- students-search-form ends -->
+            </section>
+            <section class="current-students">
+                <div style="padding: 12px;">
+                    <h4 style="text-align: center;">Current Students</h4>
+                </div>
+            </section>
+            <section class="sys_msg" style="text-align: center; padding: 6px;"></section>
+        </div>
+        <!-- main-contents ends -->
+    </div>
+    <!-- wrapper ends-->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+
+    //getting data from the url link
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const Link = urlParams.get("Link");
+
+    $("#ClassesLink").val(Link);
+
+    $.post("./php/classes_prf.php", {Link: Link}, function (data) {
+        $(".main-data").html(data);
+    });
+
+    $("#searchForm").submit(function() {
+        event.preventDefault();
+        var search = $("#search-students");
+        var error = false;
+
+        if (search.val().trim() == "" || search.val().trim() == null) {
+            error = true;
+            $(".sys_msg").html("Please enter a student name!");
+        }
+
+        if (error == false) {
+            $.ajax({
+                url: "./php/get_students_list.php",
+                type: "POST", 
+                data: $(this).serialize(),
+                success: function (data) {
+                    $(".students-search-form").append(data);
+                }
+            });
+        }
+    });
+
+    $.post("./php/get_current_students.php", {Link: Link}, function (data) {
+        $(".current-students").append(data);
+    });
+
+    $("#clear-button").click(function () {
+        location.reload();
+    });
+});    
+</script>
+</html>

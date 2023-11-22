@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./images/logo.jpg">
+    <title>Classes</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents -->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>Class</h2>
+            </section>
+            <section class="cmd-bar">
+                <!-- cmd-bar wrap-->
+                <div class="cmd-bar-wrap">
+                    <ul>
+                        <li>
+                            <a href="new_Classes.html">Add New</a>
+                        </li>
+                        <li>
+                            Limit: 
+                            <select id="limit" onchange="getMainData('Students');">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </li>
+                        <li>
+                            Sort by:
+                            <select id="order" onchange="getMainData('Classes');">
+                                <option value="ORDER BY Courses.Name ASC">Name A &#8645; Z</option>
+                                <option value="ORDER BY Courses.Name DESC">Name Z &#8645; A</option>
+                                <option value="ORDER BY Classes.Updated ASC">Data Entry Old &#8645; New</option>
+                                <option value="ORDER BY Classes.Updated DESC" selected="selected">Data Entry New &#8645; Old</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+                <!-- cmd-bar-wrap ends -->
+            </section>
+            <section class="main-data"></section>
+            <section class="pagination">
+                <div class="current-page">
+                    <input type="number" id="current-page" value="1">
+                    <span class="page-number"></span>
+                </div>
+                <div class="page-buttons">
+                    <button type="button" id="prev"><<<</button>
+                    <button type="button" class="page-button" id="pgbtn1">1</button>
+                    <button type="button" class="page-button" id="pgbtn2">2</button>
+                    <button type="button" class="page-button" id="pgbtn3">3</button>
+                    <button type="button" class="page-button" id="pgbtn4">4</button>
+                    <button type="button" class="page-button" id="pgbtn5">5</button>
+                    <button type="button" class="page-button" id="pgbtn6">6</button>
+                    <button type="button" id="next">>>></button>
+                </div>
+            </section>
+        </div>
+        <!-- main-cnotents ends -->
+    </div>
+    <!-- wrapper ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession ();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+    getMainData ("Classes");
+
+    $(".page-button").on("click", function (){
+        var newPage = $(this).html();
+        $("#current-page").val(newPage);
+        getMainData("Classes");
+    });
+
+    $("#prev").on("click", function () {
+        var newPage = Number($("#current-page").val()) - Number(1);
+        $("#current-page").val(newPage);
+        getMainData("Classes");
+    });
+
+    $("#next").on("click", function () {
+        var newPage = Number($("#current-page").val()) + Number(1);
+        $("#current-page").val(newPage);
+        getMainData("Classes");
+    });
+});    
+</script>
+</html>

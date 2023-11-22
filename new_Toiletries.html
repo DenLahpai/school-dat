@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./Images/logo.jpg">
+    <title>Register Toiletries</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents -->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>Register Toiletries</h2>
+            </section>
+            <section class="medium-form">
+                <!-- form-wrap -->
+                <div class="form-wrap">
+                    <form id="myForm" action="#" method="post">
+                        <div>
+                            <input type="text" id="Code" name="Code" placeholder="Code">
+                        </div>
+                        <div>
+                            <input type="text" id="Name" name="Name" placeholder="Item Name">
+                        </div>
+                        <div>
+                            <input type="text" id="Vendor" name="Vendor" placeholder="Vendor/Brand">
+                        </div>
+                        <div>
+                            <input type="text" id="Color" name="Color" placeholder="Color">
+                        </div>
+                        <div>
+                            <input type="text" id="Add1" name="Add1" placeholder="Additional">
+                        </div>
+                        <div>
+                            <input type="number" min="1" id="Qty" name="Qty" placeholder="Qty">
+                        </div>
+                        <div>
+                            <button type="submit" class="medium-button">Submit</button>
+                        </div>
+                    </form>
+                    <div class="sys_msg"></div>
+                </div>
+                <!-- form-wrap ends -->
+            </section>
+        </div>
+        <!-- main-contents ends -->
+    </div>
+    <!-- wrapper ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    checkSession();
+    $.post("./php/header.php", function (data){
+        $('header').html(data);
+    });
+    $("#myForm").on("submit", function(){
+        event.preventDefault();
+        var Name = $("#Name");
+        var Qty = $("#Qty");
+        var error = false;
+
+        if (Name.val().trim() == "" || Name.val().trim() == null) {
+            error = true;
+            Name.addClass("input-error");
+            $(".sys_msg").html("Please input all the field(s) in red!");
+        }
+
+        if (Qty.val().trim() == "" || Qty.val().trim() < 1) {
+            error = true;
+            Qty.addClass("input-error");
+            $(".sys_msg").html("The value of the field 'Qty' cannot be blank or zero!");
+        }
+
+        if (error == true) {
+            $(".sys_msg").addClass("error-msg");
+        }
+
+        if (error == false) {
+            $.ajax({
+                url: "./php/new_Toiletries.php", 
+                type: "POST", 
+                data: $("#myForm").serialize(),
+                success: function (data) {
+                    if (data == 0) {
+                        location.href = "view_Toiletries.html";
+                    }
+                    else {
+                        $(".sys_msg").html(data);
+                    }
+                } 
+            });
+        }
+    });
+});
+</script>
+</html>
+

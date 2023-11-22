@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./Images/logo.jpg">
+    <title>Toiletries</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <!-- header -->
+        <header></header>
+        <!-- header ends -->
+        <!-- main-contents -->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>Toiletries</h2>
+            </section>
+            <section class="home-modules">
+                <!-- home-modules-wrap -->
+                <div class="home-modules-wrap">
+                    <div class="square-button">
+                        <a href="new_Toiletries.html">
+                            <button>Register</button>
+                        </a>
+                    </div>
+                    <div class="square-button">
+                        <a href="issue_Toiletries.html">
+                            <button>Issue</button>
+                        </a>
+                    </div>
+                    <div class="square-button">
+                        <a href="view_Toiletries.html">
+                            <button>View List</button>
+                        </a>
+                    </div>
+                    <div class="square-button">
+                        <a href="view_Toiletries_issuance.html">
+                            <button>View Issuance</button>
+                        </a>
+                    </div>
+                </div>
+                <!-- home-modules-wrap ends -->
+            </section>
+        </div>
+        <!-- main-contents ends -->
+    </div>
+    <!-- wrapper ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    checkSession();
+    $.post("./php/header.php", function(data){
+        $("header").html(data);
+    });
+});
+</script>
+</html>
+

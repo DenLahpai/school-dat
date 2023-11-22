@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./Images/logo.jpg">
+    <title>Issue Stationary</title>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents -->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>Stationary Request</h2>
+            </section>
+            <section class="medium-form">
+                <!-- form-wrap -->
+                <div class="form-wrap">
+                    <form action="#" method="post" id="myForm">
+                        <div>
+                            Request By: &nbsp;
+                            <input type="text" id="Name" name="Name">
+                        </div>
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr><th>Sr.</th>
+                                        <th>Code</th>
+                                        <th>Item</th>
+                                        <th>Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            <input type="text" name="Code1" id="Code1" placeholder="Code" onblur="lookupByCode(this.value, 'Stationary', 'Name', 'item1');
+                                            lookupByCode(this.value, 'Stationary', 'Color', 'color1');
+                                            lookupByCode(this.value, 'Stationary', 'Add1', 'add1');
+                                            lookupByCode(this.value, 'Stationary', 'Vendor', 'vendor1');
+                                            ">
+                                        </td>
+                                        <td>
+                                            <span id="item1"></span>
+                                            <span id="color1"></span>
+                                            <span id="add1"></span>
+                                            <span id="vendor1"></span>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Qty1" id="Qty1" min="1" max="999">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>
+                                            <input type="text" name="Code2" id="Code2" placeholder="Code" onblur="lookupByCode(this.value, 'Stationary', 'Name' , 'item2');
+                                            lookupByCode(this.value, 'Stationary', 'Color', 'color2');
+                                            lookupByCode(this.value, 'Stationary', 'Add1', 'add2');
+                                            lookupByCode(this.value, 'Stationary', 'Vendor', 'vendor2');
+                                            ">
+                                        </td>
+                                        <td>
+                                            <span id="item2"></span>
+                                            <span id="color2"></span>
+                                            <span id="add2"></span>
+                                            <span id="vendor2"></span>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Qty2" id="Qty2"  min="1" max="999">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>
+                                            <input type="text" name="Code3" id="Code3" placeholder="Code" onblur="lookupByCode(this.value,'Stationary', 'Name', 'item3');
+                                            lookupByCode(this.value, 'Stationary', 'Color', 'color3');
+                                            lookupByCode(this.value, 'Stationary', 'Add1', 'add3');
+                                            lookupByCode(this.value, 'Stationary', 'Vendor', 'vendor3');
+                                            ">
+                                        </td>
+                                        <td>
+                                            <span id="item3"></span>
+                                            <span id="color3"></span>
+                                            <span id="add3"></span>
+                                            <span id="vendor3"></span>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Qty3" id="Qty3" min="1" max="999">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>
+                                            <input type="text" name="Code4" id="Code4" placeholder="Code" onblur="lookupByCode(this.value, 'Stationary', 'Name', 'item4');
+                                            lookupByCode(this.value, 'Stationary', 'Color', 'color4');
+                                            lookupByCode(this.value, 'Stationary', 'Add1', 'add4');
+                                            lookupByCode(this.value, 'Stationary', 'Vendor', 'vendor4');
+                                            ">
+                                        </td>
+                                        <td>
+                                            <span id="item4"></span>
+                                            <span id="color4"></span>
+                                            <span id="add4"></span>
+                                            <span id="vendor4"></span>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Qty4" id="Qty4" min="1" max="999">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>
+                                            <input type="text" name="Code5" id="Code5" placeholder="Code" onblur="lookupByCode(this.value, 'Stationary', 'Name', 'item5');
+                                            lookupByCode(this.value, 'Stationary', 'Color', 'color5');
+                                            lookupByCode(this.value, 'Stationary', 'Add1', 'add5');
+                                            lookupByCode(this.value, 'Stationary', 'Vendor', 'vendor5');
+                                            ">
+                                        </td>
+                                        <td>
+                                            <span id="item5"></span>
+                                            <span id="color5"></span>
+                                            <span id="add5"></span>
+                                            <span id="vendor5"></span>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Qty5" id="Qty5" min="1" max="999">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>
+                                            <input type="text" name="Code6" id="Code6" placeholder="Code" onblur="lookupByCode(this.value, 'Stationary', 'Name', 'item6');
+                                            lookupByCode(this.value, 'Stationary', 'Color', 'color6');
+                                            lookupByCode(this.value, 'Stationary', 'Add1', 'add6');
+                                            lookupByCode(this.value, 'Stationary', 'Vendor', 'vendor6');
+                                            ">
+                                        </td>
+                                        <td>
+                                            <span id="item6"></span>
+                                            <span id="color6"></span>
+                                            <span id="add6"></span>
+                                            <span id="vendor6"></span>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Qty6" id="Qty6" min="1" max="999">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>
+                                            <input type="text" name="Code7" id="Code7" placeholder="Code" onblur="lookupByCode(this.value, 'Stationary', 'Name', 'item7');
+                                            lookupByCode(this.value, 'Stationary', 'Color', 'color7');
+                                            lookupByCode(this.value, 'Stationary', 'Add1', 'add7');
+                                            lookupByCode(this.value, 'Stationary', 'Vendor', 'vendor7');
+                                            ">
+                                        </td>
+                                        <td>
+                                            <span id="item7"></span>
+                                            <span id="color7"></span>
+                                            <span id="add7"></span>
+                                            <span id="vendor7"></span>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Qty7" id="Qty7" min="1" max="999">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>
+                                            <input type="text" name="Code8" id="Code8" placeholder="Code" onblur="lookupByCode(this.value, 'Stationary', 'Name', 'item8'); 
+                                            lookupByCode(this.value, 'Stationary', 'Color', 'color8');
+                                            lookupByCode(this.value, 'Stationary', 'Add1', 'add8');
+                                            lookupByCode(this.value, 'Stationary', 'Vendor', 'vendor8');
+                                            ">
+                                        </td>
+                                        <td>
+                                            <span id="item8"></span>
+                                            <span id="color8"></span>
+                                            <span id="add8"></span>
+                                            <span id="vendor8"></span>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Qty8" id="Qty8" min="1" max="999">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>
+                                            <input type="text" name="Code9" id="Code9" placeholder="Code" onblur="lookupByCode(this.value, 'Stationary', 'Name', 'item9'); 
+                                            lookupByCode(this.value, 'Stationary', 'Color', 'color9');
+                                            lookupByCode(this.value, 'Stationary', 'Add1', 'add9');
+                                            lookupByCode(this.value, 'Stationary', 'Vendor', 'vendor9');
+                                            ">
+                                        </td>
+                                        <td>
+                                            <span id="item9"></span>
+                                            <span id="color9"></span>
+                                            <span id="add9"></span>
+                                            <span id="vendor9"></span>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Qty9" id="Qty9" min="1" max="999">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>
+                                            <input type="text" name="Code10" id="Code10" placeholder="Code" onblur="lookupByCode(this.value, 'Stationary', 'Name', 'item10'); 
+                                            lookupByCode(this.value, 'Stationary', 'Color', 'color10');
+                                            lookupByCode(this.value, 'Stationary', 'Add1', 'add10');
+                                            lookupByCode(this.value, 'Stationary', 'Vendor', 'vendor10');
+                                            ">
+                                        </td>
+                                        <td>
+                                            <span id="item10"></span>
+                                            <span id="color10"></span>
+                                            <span id="add10"></span>
+                                            <span id="vendor10"></span>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Qty10" id="Qty10" min="1" max="999">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center;">
+                                            <button type="submit" class="medium-button">Submit</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="sys_msg"></div>
+                    </form>
+                </div>
+                <!-- form-wrap ends -->
+            </section>
+        </div>
+        <!-- main-contents -->
+    </div>
+    <!-- wrapper ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession();
+    $.post('./php/header.php', function (data) {
+        $("header").html(data);
+    });
+
+    $("#myForm").on("submit", function () {
+        event.preventDefault();
+        var Name = $("#Name");
+        var error = false;
+        if (Name.val().trim() == "" || Name.val().trim() == null) {
+            error = true;
+            Name.addClass("input-error");
+        }
+
+        if (error == true) {
+            $(".sys_msg").html("Please fill out all the field(s) in red!");
+            $(".sys_msg").addClass("error-msg");
+        }
+
+        if (error == false) {
+            $.ajax({
+                url: "./php/issue_Stationary.php",
+                type: "POST",
+                data: $("#myForm").serialize(),
+                success: function (data) {
+                    location.href = "view_Stationary.html";
+                },
+            });
+        }
+    });
+});
+</script>
+</html>
+

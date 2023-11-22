@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./Images/logo.jpg">
+    <title>Edit Stationary</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-content -->
+        <div class="main-content">
+            <section class="medium-form"></section>
+        </div>
+        <!-- main-content ends -->
+    </div>
+    <!-- wrapper ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    checkSession();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+
+    //getting data from the url link
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const Link = urlParams.get("Link");
+
+    $.post("./php/edit_Stationary.php", {Link: Link}, function(data){
+        $(".medium-form").html(data);
+    });
+});
+</script>
+</html>
+

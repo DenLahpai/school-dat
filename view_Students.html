@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./Images/logo.jpg">
+    <title>Student Profile</title>
+</head>
+<body>
+    <!-- wrapper  -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents -->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>
+                    Student Profile
+                </h2>
+            </section>
+            <section class="student-profile">
+                <!-- split left -->
+                <div class="split left">
+                    <!-- profile-wrap -->
+                    <div class="profile-wrap"></div>
+                    <!-- profile-wrap ends-->
+                </div>
+                <!-- split left ends -->
+                <!-- split right -->
+                <div class="split right">
+                    <div class="sub-title">
+                        <h3>Classes</h3>
+                    </div>
+                    <!-- students-classes-wrap -->
+                    <div class="students-classes-wrap">
+                        <div class="add-class-btn" onclick="Toggle('.students-class-cmd');">
+                            Add to a Class
+                        </div>
+                        <!-- students-class-cmd-->
+                        <div class="students-class-cmd">
+                            <form action="#" id="students-class-form" method="post">
+                                <input type="hidden" id="StudentsLink" name="StudentsLink">
+                                <select name="ClassesLink" id="ClassesLink">
+                                    <option value="">Select a Class</option>
+                                </select>
+                                <button type="submit" class="medium-button">Add</button>
+                            </form>
+                        </div>
+                        <!-- students-class-cmd ends -->
+                        <!-- students-current-class -->
+                        <div class="students-current-class"></div>
+                        <!-- students-current-class ends-->
+                    </div>
+                    <!-- students-classes-wrap ends -->
+                    <!-- students-invoices-wrap -->
+                    <div class="students-invoices-wrap">
+                        <div class="sub-title">
+                            <h3>Invoices</h3>
+                        </div>
+                        <!-- students-invoices-list -->
+                        <div class="students-invoices-list">
+                            <!-- students-invoices-table -->
+                            <div class="students-invoices-table"></div>
+                            <!-- students-invoices-table-->
+                        </div>
+                        <!-- studnets-invoices-list ends -->
+                    </div>
+                    <!-- students-invoices-wrap ends -->
+                </div>
+                <!-- split right ends -->
+            </section>
+        </div>
+        <!-- main-contents ends -->
+    </div>
+    <!-- wrapper ends  -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+
+    //getting data from the url link
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const Link = urlParams.get("Link");
+    $("#StudentsLink").val(Link);
+
+    $.post("./php/students_prf.php", {Link: Link}, function (data) {
+        $(".profile-wrap").html(data);
+    });
+
+    $.post("./php/get_current_classes_list.php", function (data) {
+        $("#ClassesLink").append(data);
+    });
+
+    //getting students classes
+    $.post("./php/select_Students_Classes.php", {StudentsLink: Link}, function (data) {
+        $(".students-current-class").html(data);
+    });
+
+    //getting students invoices
+    $.post("./php/select_Students_Invoices.php", {StudentsLink: Link}, function (data) {
+        $(".students-invoices-table").html(data);
+    });
+
+    $("#students-class-form").submit(function () {
+        event.preventDefault();
+        var ClassesLink = $("#ClassesLink");
+        var error = false;
+
+        if (ClassesLink.val() == "" || ClassesLink.val() == null) {
+            error = true;
+            alert("Please choose a class!");
+        }
+
+        if (error == false) {
+            $.ajax({
+                url: "./php/add_students_classes.php",
+                type: "post",
+                data: $(this).serialize(), 
+                success: function (data) {
+                    if (data == 0) {
+                        location.reload();
+                        // alert(data);
+                    }
+                    else {
+                        alert(data);
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
+</html>

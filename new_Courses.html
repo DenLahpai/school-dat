@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./images/logo.jpg">
+    <title>New Course</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents-->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>New Course</h2>
+            </section>
+            <section class="medium-form">
+                <!-- form-wrap -->
+                <div class="form-wrap">
+                    <form action="#" method="post" id="myForm">
+                        <div>
+                            Course Name: <br>
+                            <input type="text" name="Name" id="Name" placeholder="Course Name">
+                        </div>
+                        <div>
+                            Description: <br>
+                            <textarea name="Description" id="Description" cols="21" rows="6"></textarea>
+                        </div>
+                        <div>
+                            Age Range: <br>
+                            <input type="text" name="Age" id="Age">
+                        </div>
+                        <div>
+                            Remark: <br>
+                            <input type="text" name="Remark" id="Remark">
+                        </div>
+                        <div>
+                            <button type="submit" class="medium-button">Submit</button>
+                        </div>
+                    </form>
+                    <div class="sys_msg"></div>
+                </div>
+                <!-- form-wrap ends -->
+            </section>
+        </div>
+        <!-- main-contents ends -->
+    </div>
+    <!-- wrapper ends-->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    checkSession();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+
+    $("#myForm").submit(function () {
+        event.preventDefault();
+        var error = false;
+        var Name = $("#Name");
+        var Age = $("#Age");
+
+        if (Name.val() == "" || Name.val() == " " || Name.val() == null) {
+            error = true;
+            Name.addClass("input-error");
+        }
+
+        if (Age.val() == "" || Age.val() == " " || Age.val() == null) {
+            error = true;
+            Age.addClass("input-error");
+        }
+
+        if (error == true) {
+            $(".sys_msg").html("Please fill out all the field(s) in red!");
+            $(".sys_msg").addClass("error-msg");
+        }
+
+        if (error == false) {
+            $.ajax({
+                url: "./php/new_Courses.php",
+                type: "POST", 
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data == 0) {
+                        location.href = 'Courses.html';
+                    }
+                    else {
+                        $(".sys_msg").html(data);
+                    }
+                },
+            });
+        }
+    });
+});    
+</script>
+</html>

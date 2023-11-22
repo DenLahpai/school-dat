@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./images/logo.jpg">
+    <title>Add Student</title>
+</head>
+<body>
+    <!-- wrapper  -->
+    <div class="wrapper">
+        <header></header>
+        <!-- main-contents  -->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>New Student</h2>
+            </section>
+            <section class="medium-form">
+                <!-- form-wrap  -->
+                <div class="form-wrap">
+                    <form action="#" id="myForm" method="post">
+                        <div>
+                            Gender: &nbsp;
+                            <input type="radio" id="Male" name="Gender" value="M">
+                            <label for="Male">M</label>
+                            &nbsp;
+                            <input type="radio" id="Female" name="Gender" value="F">
+                            <label for="Female">F</label>
+                        </div>
+                        <div>
+                            <input type="text" id="Name" name="Name" placeholder="Name">
+                        </div>
+                        <div>
+                            <input type="text" id="EnglishName" name="EnglishName" placeholder="English Name">
+                        </div>
+                        <div>
+                            Admission Date: <br>
+                            <input type="date" id="AdmissionDate" name="AdmissionDate">
+                        </div>
+                        <div>
+                            Admission No: <br>
+                            <input type="text" id="AdmissionNo" name="AdmissionNo">
+                        </div>
+                        <div>
+                            MOE Admission No: <br>
+                            <input type="text" id="MOE" name="MOE">
+                        </div>
+                        <div>
+                            Name of Previous School: <br>
+                            <input type="text" id="PreviousSchoolName" name="PreviousSchoolName">
+                        </div>
+                        <div>
+                            Previous School's Township: <br>
+                            <input type="text" id="PreviousSchoolTownship" name="PreviousSchoolTownship">
+                        </div>
+                        <div>
+                            Grade at Previous School: <br>
+                            <input type="text" id="PreviousGrade" name="PreviousGrade">
+                        </div>
+                        <div>
+                            Date of Birth:<br>
+                            <input type="date" id="DOB" name="DOB">
+                        </div>
+                        <div>
+                            Place of Birth:<br>
+                            <input type="text" id="PlaceOfBirth" name="PlaceOfBirth" placeholder="Place of Birth">
+                        </div>
+                        <div>
+                            <input type="text" id="Nationality" name="Nationality" placeholder="Nationality" value="Myanmar">
+                        </div>
+                        <div>
+                            <input type="text" id="Ethnicity" name="Ethnicity" placeholder="Ethnicity">
+                        </div>
+                        <div>
+                            <input tpye="text" id="Religion" name="Religion" placeholder="Religion">
+                        </div>
+                        <div>
+                            <input type="text" id="Address1" name="Address1" placeholder="Address 1">
+                        </div>
+                        <div>
+                            <input type="text" id="Address2" name="Address2" placeholder="Address 2">
+                        </div>
+                        <div>
+                            <input type="text" id="Township" name="Township" placeholder="Township">
+                        </div>
+                        <div>
+                            <button type="submit" class="medium-button">Submit</button>
+                        </div>
+                    </form>
+                    <div class="sys_msg"></div>
+                </div>
+                <!-- form-wrap ends -->
+            </section>
+        </div>
+        <!-- main-contents ends -->
+    </div>
+    <!-- wrapper ends  -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession();
+    $.post("./php/header.php", function (data) {
+        $("header").html(data);
+    });
+
+    $("#myForm").on("submit", function () {
+        event.preventDefault();
+        var Gender = $('input[name="Gender"]:checked');
+        var Name = $("#Name");
+        var EnglishName = $("#EnglishName");
+        var DOB = $("#DOB");
+        var error = false;
+
+        if (Gender.val() == "" || Gender.val() == null) {
+            alert("Please select a gender!");
+            error = true;   
+        }
+
+        if (Name.val() == "" || Name.val() == " " || Name.val() == null) {
+            Name.addClass("input-error");
+            $(".sys_msg").html("Please input all the field(s) in red!");
+            error = true;
+        }
+
+        if (EnglishName.val() == "" || EnglishName.val() == " " || EnglishName.val == null) {
+            EnglishName.addClass("input-error");
+            $(".sys_msg").html("Please input all the field(s) in red!");
+            error = true;
+        }
+
+        if (DOB.val() == "") {
+            DOB.addClass("input-class");
+            $(".sys_msg").html("Please input all the field(s) in red!");
+            error = true;
+        }
+
+        if (error == true) {
+            $(".sys_msg").addClass("error-msg");
+        }
+        
+        if (error == false) {
+            $.ajax({
+                url: "./php/new_Students.php",
+                type: "post",
+                data: $("#myForm").serialize(),
+                success: function (data) {
+                    if (data == 0) {
+                        //zero is returned for no error!
+                        location.href = "Students.html";
+                    }
+                    else {
+                        $(".sys_msg").html(data);
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
+</html>

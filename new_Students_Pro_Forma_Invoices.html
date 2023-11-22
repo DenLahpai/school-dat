@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="shortcut icon" href="./Images/logo.jpg">
+    <title>New Students Pro Forma Invoices</title>
+</head>
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+        <!-- main-contents -->
+        <div class="main-contents">
+            <section class="page-title">
+                <h2>New Pro Forma Invoice</h2>
+            </section>
+            <section class="main-data"></section>
+        </div>
+        <!-- main-contents -->
+    </div>
+    <!-- wrapper ends -->
+</body>
+<script src="./js/jquery.js"></script>
+<script src="./js/scripts.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    checkSession ();
+
+    //getting data from the url link
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const StudentsLink = urlParams.get("StudentsLink");
+
+    $.post("./php/new_Students_Pro_Forma_Invoices.php", {StudentsLink: StudentsLink}, function (data) {
+        $(".main-data").html(data);
+    });
+});  
+</script>
+</html>
